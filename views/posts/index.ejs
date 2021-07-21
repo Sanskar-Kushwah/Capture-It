@@ -1,0 +1,35 @@
+<% layout('layouts/boilerplate')%>
+<div id="cluster-map"></div>
+<h1>All Posts</h1>
+<div>
+    <a href="/posts/new">Add New Post</a>
+</div>
+<% for (let post of posts){%>
+<div class="card mb-3" >
+    <div class="row">
+        <div class="col-md-4">
+            <% if(post.images.length) { %> 
+            <img class="img-fluid" alt="" src="<%=post.images[0].url%>">
+            <% } else { %>
+                <img class="img-fluid" alt="" src="https://res.cloudinary.com/sanskar151/image/upload/v1620980292/Project/default-image-620x600_uocvft.jpg">
+            <% } %>      
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title"><%= post.title %> </h5>
+                <p class="card-text"><%= post.description %></p>
+                <p class="card-text">
+                    <small class="text-muted"><%= post.location%></small>
+                </p>
+                <a class="btn btn-primary" href="/posts/<%=post._id%>">View <%=post.title%></a>
+            </div>
+        </div>
+    </div>
+</div>
+<% }%>
+<script>
+    const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
+    const posts =  {features: <%-JSON.stringify(posts)%>}
+</script>
+
+<script src="/javascripts/clusterMap.js"></script>
